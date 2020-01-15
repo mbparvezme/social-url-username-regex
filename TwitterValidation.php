@@ -59,6 +59,7 @@ class TwitterValidation
 	}
 
 	protected verifyUsername(){
+		// Gist: https://gist.github.com/webdevron/8e6d290913fd24a58890a140e7d7195c
 		if(preg_match($this->unameRegEx, $this->input)){
 			$this->username = (!$this->excludeAt ? $this->input : str_replace("@", "", $this->input));
 			return TRUE;
