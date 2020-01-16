@@ -13,3 +13,11 @@
     - https://www.twitter.com/@webdevronsocial
     - https://www.twitter.com/#!/webdevronsocial
 */
+
+/**
+    Also valid for
+    - @webdevronsocial
+    - user_name
+    - _username
+    - username_
+*/
