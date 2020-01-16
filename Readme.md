@@ -1,4 +1,4 @@
-The twitter RegEx will work with all the formats of twitter URL given bellow.
+The twitter RegEx will work with all the formats of twitter URLs and Username given bellow.
 
 Valid Twitter URls
 - http://twitter.com/webdevronsocial
@@ -14,11 +14,8 @@ Valid Twitter URls
 - https://www.twitter.com/@webdevronsocial
 - https://www.twitter.com/#!/webdevronsocial
 
-
-/**
-    Also valid for
-    - @webdevronsocial
-    - user_name
-    - _username
-    - username_
-*/
+Valid twitter username
+- @webdevronsocial
+- user_name
+- _username
+- username_
