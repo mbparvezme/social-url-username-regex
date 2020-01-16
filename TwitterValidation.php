@@ -21,48 +21,56 @@ class TwitterValidation
 	 * Variable that contains the RegEx
 	 * to validate an URl
 	 */
-	protected $urlRegEx = '/(http(s)?:\/\/)?(www\.)?twitter\.com\/(#!\/)?@?([a-zA-Z0-9_]{1,15})/i';
+	protected $urlRegEx = '/(?:https?:\/\/)?(?:www\.)?twitter\.com\/(?:#!\/)?@?([a-zA-Z0-9_]{1,15})/i';
 
 
 	/**
 	 * Variable that contains the RegEx
 	 * to validate an username
 	 */
-	protected $unameRegEx = '/^@?([a-z0-9_]{1,15})$/i';
+	protected $unameRegEx = '/^@?([a-zA-Z0-9_]{1,15})$/';
+	
+	
+	public $inputData;
+	
+	
+	public $validData;
+	
+	
+	public $returnFormat;
 
-	public $excludeAt = FALSE;
 
-	public $input;
-
-	public $url;
-
-	public $username;
-
+	function __construct( $input = "" ) {
+		$this->inputData = $input;
+		$this->returnFormat = 1;
+	}
+	
+	
 	public verify(){
-		// Verify URL
-		if( $this->verifyUrl() )
-			return $this->url;
-		// Verify Username
-		if( $this->verifyUsername() )
-			return $this->username;
-
+		// Verify URL OR Username
+		if( $this->verifyUrl() OR $this->verifyUsername() ) return $this->validData;
 		// If both mismatch
-		return FALSE;
+		else return FALSE;
 	}
 
+
 	protected verifyUrl(){
-		if(preg_match($this->urlRegEx, $this->input, $matches)){
-			$this->url = $matches[5];
+		if(preg_match($this->urlRegEx, $this->inputData, $matches)){
+			$this->validData = ($this->returnFormat < 2) ? $matches[$this->returnFormat] : $matches;
 			return TRUE;
 		}
 		return FALSE;
 	}
 
+
 	protected verifyUsername(){
-		// PHP Gist: https://gist.github.com/webdevron/8e6d290913fd24a58890a140e7d7195c
-		// JS Gist: https://gist.github.com/webdevron/b3b1a17840d54176ec53a1eef023ecdd
-		if(preg_match($this->unameRegEx, $this->input)){
-			$this->username = (!$this->excludeAt ? $this->input : str_replace("@", "", $this->input));
+		if(preg_match($this->unameRegEx, $this->inputData, $matches)){
+			if($this->returnFormat == 0)
+				$this->validData = $this->inputData;
+			if($this->returnFormat == 1)
+				$this->validData = $matches[1];
+			if($this->returnFormat == 2)
+				$this->validData = '@'.$matches[1];
 			return TRUE;
 		}
 		return FALSE;
